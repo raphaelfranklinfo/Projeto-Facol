@@ -4,15 +4,22 @@ nadador={ x = 20, y = 500, w = 32, h = 37, speed = 120 }
 tubarao={ x = 20, y = 40, w = 55, h = 65, speed = 120 }
 paredeE = {x=799, y=0, w=5, h=600} 
 paredeD = {x=-4, y=0, w=5, h=600} 
-
+terra= {x=0, y=0, w=0,h=600}
 function love.load()
     world = bump.newWorld()
     world:add(nadador, nadador.x, nadador.y, nadador.w, nadador.h)
     world:add(tubarao, tubarao.x, tubarao.y, tubarao.w, tubarao.h)
     world:add(paredeE, paredeE.x, paredeE.y, paredeE.w, paredeE.h)
     world:add(paredeD, paredeD.x, paredeD.y, paredeD.w, paredeD.h)
+    --world:add(terra,terra.x,terra.y,terra.w,terra.h)
     filipe = love.graphics.newImage("filipe.png")
     Inimigo = love.graphics.newImage("inimigo.png")
+    areia = love.graphics.newImage("areia.png")
+    bateu = ""
+    introMusic = love.audio.newSource("sounds/trilhaSonora.mp3")
+    bumSom= love.audio.newSource("sounds/Laser.mp3")		
+    love.audio.play(introMusic)
+    
     
 end
 
@@ -20,10 +27,12 @@ function love.draw()
     love.graphics.setBackgroundColor(120,255,230)
     love.graphics.draw(filipe, nadador.x, nadador.y)
     love.graphics.draw(Inimigo, tubarao.x, tubarao.y)
+    love.graphics.draw(areia,terra.x,terra.y)
     love.graphics.setColor(255,255,255)
     love.graphics.rectangle("fill", paredeE.x, paredeE.y, paredeE.w, paredeE.h)
     love.graphics.setColor(255,255,255)
     love.graphics.rectangle("fill", paredeD.x, paredeD.y, paredeD.w, paredeD.h)
+    love.graphics.print("Controles: setas , ESC para sair", 570, 580 )
 end
 
 function love.update(dt)
@@ -42,17 +51,9 @@ function love.update(dt)
     dyNadador = -speed * dt
   end
   
-  
-  if love.keyboard.isDown('d') then
-    dxTubarao = speed * dt
-  elseif love.keyboard.isDown('a') then
-    dxTubarao = -speed * dt
-  end
-  if love.keyboard.isDown('s') then
+--movimento tubarão 
     dyTubarao = speed * dt
-  elseif love.keyboard.isDown('w') then
-    dyTubarao = -speed * dt
-  end
+  
 
   if dxNadador ~= 0 or dyNadador ~= 0 then
     local cols
@@ -64,3 +65,5 @@ function love.update(dt)
   end
   
 end
+
+
